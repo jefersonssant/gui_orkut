@@ -31,32 +31,26 @@ export default function Home() {
 
     try {
       if (editandoId) {
-        // PUT (editar)
-        const res = await api.put(`/posts/${editandoId}`, {
+        await api.put(`/posts/${editandoId}`, {
           titulo,
           conteudo,
         });
 
-        setPosts((prev) =>
-          prev.map((post) =>
-            post.post_id === editandoId ? res.data.post : post
-          )
-        );
-
         setEditandoId(null);
       } else {
-        // POST (criar)
-        const res = await api.post("/posts", { titulo, conteudo });
-
-        setPosts((prev) => [res.data.post, ...prev]);
+        await api.post("/posts", { titulo, conteudo });
       }
+
+      //BUSCA NOVAMENTE OS POSTS (com nome do usuário)
+      const res = await api.get("/posts");
+      setPosts(res.data);
 
       setTitulo("");
       setConteudo("");
-    } catch {
-      alert("Erro ao salvar post");
+    } catch (error) {
+      alert("Erro ao salvar post" + error);
     }
-  }
+}
 
   // Iniciar edição
   function handleEdit(post) {
