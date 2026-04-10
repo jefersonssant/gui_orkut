@@ -20,4 +20,38 @@
     }
 }
 
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+
+    button {
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:first-child {
+      background-color: #2196f3;
+    }
+
+    button:first-child:hover {
+      background-color: #1976d2;
+    }
+}
+
+.delete {
+  background-color: #f44336;
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+}
+
+
+
+
 

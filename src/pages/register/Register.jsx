@@ -1,25 +1,28 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
-import "./Register.module.scss";
+import s from "./Register.module.scss";
 
 export default function Register() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
 
   async function handleRegister(e) {
     e.preventDefault();
 
     try {
       await api.post("/usuarios", { nome, email, senha });
-      alert("Usuário criado!");
+      alert("Usuário criado, você será redirecionado para tela login!");
+      navigate("/login")
     } catch {
       alert("Erro ao cadastrar");
     }
   }
 
   return (
-    <div className="register-container">
+    <div className={s.registerContainer}>
       <form onSubmit={handleRegister}>
         <h2>Cadastro</h2>
         <input placeholder="Nome" onChange={(e) => setNome(e.target.value)} />

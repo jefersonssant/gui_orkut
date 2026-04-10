@@ -31,6 +31,10 @@ export default function Login() {
         <input type="password" placeholder="Senha" onChange={(e) => setSenha(e.target.value)} />
         <button>Entrar</button>
       </form>
+      <div>
+        <h6>Não tem cadastro? Crie um:</h6>
+        <button onClick={() => (navigate("/cadastro"))}>Cadastre-se</button>
+      </div>
     </div>
   );
 }
