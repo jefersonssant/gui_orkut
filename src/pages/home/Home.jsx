@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/api";
+//import api from "../../services/api";
 import Post from "../../components/post/Post";
 import s from "./Home.module.scss";
 
@@ -12,66 +12,71 @@ export default function Home() {
   const [editandoId, setEditandoId] = useState(null);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  // Listar as postagens
 
-  useEffect(() => {
-    async function carregarPosts() {
-      try{
-        const res = await api.get("/posts");
-        setPosts(res.data);
-      } catch (error) {
-        console.log("Erro ao carregar posts" + error);
-      }
-    }
-    carregarPosts();
-  }, []);
+  // useEffect(() => {
+  //   async function carregarPosts() {
+  //     try{
+  //       const res = await api.get("/posts");
+  //       setPosts(res.data);
+  //     } catch (error) {
+  //       console.log("Erro ao carregar posts" + error);
+  //     }
+  //   }
+  //   carregarPosts();
+  // }, []);
 
   //Editar ou criar nova postagem
-  async function handleSubmit(e) {
-    e.preventDefault();
 
-    try {
-      if (editandoId) {
-        await api.put(`/posts/${editandoId}`, {
-          titulo,
-          conteudo,
-        });
+//   async function handleSubmit(e) {
+//     e.preventDefault();
 
-        setEditandoId(null);
-      } else {
-        await api.post("/posts", { titulo, conteudo });
-      }
+//     try {
+//       if (editandoId) {
+//         await api.put(`/posts/${editandoId}`, {
+//           titulo,
+//           conteudo,
+//         });
 
-      //BUSCA NOVAMENTE OS POSTS (com nome do usuário)
-      const res = await api.get("/posts");
-      setPosts(res.data);
+//         setEditandoId(null);
+//       } else {
+//         await api.post("/posts", { titulo, conteudo });
+//       }
 
-      setTitulo("");
-      setConteudo("");
-    } catch (error) {
-      alert("Erro ao salvar post" + error);
-    }
-}
+//       //BUSCA NOVAMENTE OS POSTS (com nome do usuário)
+//       const res = await api.get("/posts");
+//       setPosts(res.data);
+
+//       setTitulo("");
+//       setConteudo("");
+//     } catch (error) {
+//       alert("Erro ao salvar post" + error);
+//     }
+// }
 
   // Iniciar edição
-  function handleEdit(post) {
-    setTitulo(post.titulo);
-    setConteudo(post.conteudo);
-    setEditandoId(post.post_id);
-  }
 
-  async function handleDelete(id) {
-    const confirmacao = confirm("Tem certeza que deseja excluir este post");
-    if (!confirmacao) return;
+  // function handleEdit(post) {
+  //   setTitulo(post.titulo);
+  //   setConteudo(post.conteudo);
+  //   setEditandoId(post.post_id);
+  // }
 
-    try {
-      await api.delete(`/posts/${id}`);
+  //Deletar Postagens
 
-      //Remove do estado sem precisar buscar novamente
-      setPosts((prev) => prev.filter((post) => post.post_id !== id));
-    } catch (error) {
-      alert("Erro ao deletar post" + error);
-    }
-  }
+  // async function handleDelete(id) {
+  //   const confirmacao = confirm("Tem certeza que deseja excluir este post");
+  //   if (!confirmacao) return;
+
+  //   try {
+  //     await api.delete(`/posts/${id}`);
+
+  //     //Remove do estado sem precisar buscar novamente
+  //     setPosts((prev) => prev.filter((post) => post.post_id !== id));
+  //   } catch (error) {
+  //     alert("Erro ao deletar post" + error);
+  //   }
+  // }
 
   function handleLogout() {
     logout();          // remove token
@@ -87,7 +92,7 @@ export default function Home() {
         </button>
       </div>
       {/* FORM DE POSTAGEM */}
-        <form className={s.postForm} onSubmit={handleSubmit}>
+        <form className={s.postForm} onSubmit={}> {/*handleSubmit*/}
           <input
             placeholder="Título"
             value={titulo}
@@ -123,7 +128,7 @@ export default function Home() {
             <p className={s.empty}>Nenhum post ainda...</p>
           ) : (
             posts.map((post) => (
-              <Post key={post.post_id} post={post} onEdit={handleEdit} onDelete={handleDelete}/>
+              <Post key={post.post_id} post={post} onEdit={handleEdit} onDelete={handleDelete}/> 
             ))
           )}
         </div>
